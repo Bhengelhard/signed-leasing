@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signed Leasing — More leases. Less to manage.</title>
+  <meta name="description" content="Signed is a remote leasing managed service for multifamily properties. We respond to every lead in under 15 minutes, run your follow-up sequences, and schedule tours.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Reset ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    img, svg { display: block; max-width: 100%; }
+
+    /* ─── Tokens ─────────────────────────────────────── */
+    :root {
+      --black:        #0D0D0D;
+      --forest:       #1F5C3A;
+      --forest-deep:  #163D27;
+      --white:        #FFFFFF;
+      --offwhite:     #F6FAF7;
+      --birch:        #F3EEE6;
+      --birch-border: #DDD8CE;
+      --green-light:  #E8F5EE;
+      --slate:        #4A5568;
+      --border:       #E2E8F0;
+      --muted-white:  #C8D5CE;
+      --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --max-w: 1160px;
+      --section-py: 96px;
+    }
+
+    /* ─── Base ───────────────────────────────────────── */
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--black);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    section { padding: var(--section-py) 0; }
+
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    p { max-width: 640px; }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── Buttons ────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s, transform 0.1s, border-color 0.15s;
+      text-decoration: none;
+    }
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: var(--forest);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: var(--forest-deep); }
+
+    /* Light-hero variant: outline button on birch bg */
+    .btn-outline-dark {
+      background: transparent;
+      color: var(--black);
+      border: 1.5px solid var(--birch-border);
+    }
+    .btn-outline-dark:hover { border-color: var(--slate); background: rgba(0,0,0,0.04); }
+
+    /* Dark-bg outline (used in team callout etc.) */
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.3);
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.7); }
+
+    .btn-dark {
+      background: var(--black);
+      color: var(--white);
+    }
+    .btn-dark:hover { background: #222; }
+
+    /* ─── Section label ──────────────────────────────── */
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--forest);
+      margin-bottom: 20px;
+    }
+
+    /* ─── NAV — birch tinted to match hero ───────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(243,238,230,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--birch-border);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo { display: flex; align-items: center; }
+    .nav-logo svg { height: 36px; width: auto; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--slate);
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    .nav-cta { font-size: 14px; padding: 10px 20px; }
+
+    /* ─── HERO — full birch background ──────────────── */
+    #hero {
+      background: var(--birch);
+      padding: 160px 0 120px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero-left { }
+
+    .hero-right { }
+
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--forest);
+      margin-bottom: 24px;
+    }
+
+    .hero-headline {
+      font-size: clamp(36px, 3.6vw, 52px);
+      color: var(--black);
+      margin-bottom: 28px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      line-height: 1.75;
+      color: var(--slate);
+      max-width: 500px;
+      margin-bottom: 40px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Stats panel: white cards sitting on birch */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .hero-stat {
+      background: var(--white);
+      border: 1px solid var(--birch-border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      transition: box-shadow 0.2s;
+    }
+    .hero-stat:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-number span {
+      color: var(--forest);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--slate);
+      line-height: 1.4;
+      max-width: 220px;
+    }
+
+    /* ─── PROBLEM ────────────────────────────────────── */
+    #problem {
+      background: var(--white);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .problem-text h2 {
+      font-size: clamp(32px, 3.5vw, 44px);
+      margin-bottom: 24px;
+    }
+
+    .problem-text p {
+      color: var(--slate);
+      margin-bottom: 16px;
+      font-size: 17px;
+    }
+
+    .stat-cards {
+      display: grid;
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: var(--birch);
+      border: 1px solid var(--birch-border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .stat-card-number {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--forest);
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .stat-card-text {
+      font-size: 15px;
+      color: var(--slate);
+      line-height: 1.5;
+      padding-top: 4px;
+    }
+
+    .stat-footnote {
+      font-size: 11px;
+      color: var(--slate);
+      opacity: 0.6;
+      margin-top: 8px;
+    }
+
+    .stat-footnote a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .stat-footnote a:hover {
+      opacity: 1;
+    }
+
+    /* ─── WHAT WE DO ─────────────────────────────────── */
+    #service {
+      background: var(--birch);
+    }
+
+    .service-header {
+      max-width: 680px;
+      margin-bottom: 64px;
+    }
+
+    .service-header h2 {
+      font-size: clamp(32px, 3.5vw, 44px);
+      margin-bottom: 20px;
+    }
+
+    .service-header p {
+      font-size: 18px;
+      color: var(--slate);
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .workflow-list {
+      list-style: none;
+      display: grid;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .workflow-list li {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 24px;
+      font-size: 15px;
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .workflow-list li:last-child { border-bottom: none; }
+    .workflow-list li:hover { background: var(--white); }
+
+    .workflow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--forest);
+      flex-shrink: 0;
+    }
+
+    .service-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .service-aside p {
+      font-size: 17px;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+
+    .not-box {
+      background: var(--white);
+      border: 1px solid var(--birch-border);
+      border-radius: 10px;
+      padding: 28px 32px;
+    }
+
+    .not-box h3 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 14px;
+    }
+
+    .not-box ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .not-box ul li {
+      font-size: 15px;
+      color: var(--slate);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .not-box ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 1px;
+      background: var(--slate);
+    }
+
+    /* ─── HOW IT WORKS (3 pillars) ───────────────────── */
+    #how {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    #how .section-label { color: var(--muted-white); }
+
+    .how-header {
+      max-width: 600px;
+      margin-bottom: 64px;
+    }
+
+    .how-header h2 {
+      font-size: clamp(32px, 3.5vw, 44px);
+      color: var(--white);
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .pillar {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 48px 40px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .pillar:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .pillar-number {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--muted-white);
+      margin-bottom: 20px;
+    }
+
+    .pillar h3 {
+      font-size: 22px;
+      color: var(--white);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .pillar p {
+      font-size: 15px;
+      color: var(--muted-white);
+      line-height: 1.7;
+    }
+
+    /* ─── TEAM ───────────────────────────────────────── */
+    #team {
+      background: var(--birch);
+    }
+
+    .team-header {
+      max-width: 640px;
+      margin-bottom: 64px;
+    }
+
+    .team-header h2 {
+      font-size: clamp(32px, 3.5vw, 44px);
+      margin-bottom: 20px;
+    }
+
+    .team-header p {
+      font-size: 17px;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+
+    .team-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .team-card {
+      background: var(--white);
+      border: 1px solid var(--birch-border);
+      border-radius: 10px;
+      padding: 36px 32px;
+    }
+
+    .team-card-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--green-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .team-card-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--forest);
+    }
+
+    .team-card h3 {
+      font-size: 17px;
+      margin-bottom: 10px;
+    }
+
+    .team-card p {
+      font-size: 14px;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    .team-callout {
+      background: var(--forest);
+      border-radius: 10px;
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .team-callout p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.9);
+      max-width: 560px;
+    }
+
+    /* ─── PRICING ────────────────────────────────────── */
+    #pricing {
+      background: var(--white);
+    }
+
+    .pricing-header {
+      max-width: 560px;
+      margin-bottom: 64px;
+    }
+
+    .pricing-header h2 {
+      font-size: clamp(32px, 3.5vw, 44px);
+      margin-bottom: 16px;
+    }
+
+    .pricing-header p {
+      font-size: 17px;
+      color: var(--slate);
+    }
+
+    /* ── Slider calculator ── */
+    .pricing-calculator {
+      max-width: 100%;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .slider-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    .slider-value {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--forest);
+    }
+
+    .slider-value span {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--slate);
+      letter-spacing: 0;
+    }
+
+    /* Range input */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      outline: none;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--forest);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 1px var(--forest), 0 2px 6px rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--forest);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 1px var(--forest);
+      cursor: pointer;
+    }
+
+    .slider-ticks {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--slate);
+      margin-bottom: 40px;
+      opacity: 0.7;
+    }
+
+    /* Output card */
+    .pricing-output {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .pricing-output-cell {
+      background: var(--white);
+      padding: 32px 36px;
+    }
+
+    .pricing-output-cell.highlight {
+      background: var(--birch);
+    }
+
+    .output-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 10px;
+    }
+
+    .output-number {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .output-number span {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .output-sub {
+      font-size: 13px;
+      color: var(--slate);
+    }
+
+    .pricing-includes {
+      font-size: 14px;
+      color: var(--slate);
+      padding: 20px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .pricing-pilot {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .pricing-pilot p {
+      font-size: 14px;
+      color: var(--slate);
+      margin: 0 auto;
+    }
+
+    .pricing-pilot a {
+      color: var(--forest);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ─── ONBOARDING / TIMELINE ──────────────────────── */
+    #onboarding {
+      background: var(--birch);
+      overflow: hidden;
+    }
+
+    .onboarding-header {
+      max-width: 560px;
+      margin-bottom: 80px;
+    }
+
+    .onboarding-header h2 {
+      font-size: clamp(32px, 3.5vw, 44px);
+      margin-bottom: 16px;
+    }
+
+    .onboarding-header p {
+      font-size: 17px;
+      color: var(--slate);
+    }
+
+    /* Timeline wrapper */
+    .timeline {
+      position: relative;
+      max-width: 680px;
+    }
+
+    /* The track (full gray line) */
+    .timeline-track {
+      position: absolute;
+      left: 6px;
+      top: 7px;
+      bottom: 7px;
+      width: 2px;
+      background: var(--birch-border);
+    }
+
+    /* The fill line (animated via JS) */
+    .timeline-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 0%;
+      background: var(--forest);
+      transition: height 0.1s linear;
+    }
+
+    .timeline-step {
+      display: flex;
+      gap: 32px;
+      padding-bottom: 56px;
+      position: relative;
+      opacity: 0.35;
+      transform: translateX(-8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .timeline-step:last-child { padding-bottom: 0; }
+
+    .timeline-step.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .step-dot {
+      flex-shrink: 0;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--birch-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .timeline-step.active .step-dot {
+      background: var(--forest);
+      border-color: var(--forest);
+    }
+
+    .step-content {
+      padding-top: 8px;
+    }
+
+    .step-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--forest);
+      margin-bottom: 6px;
+      opacity: 0;
+      transition: opacity 0.3s 0.1s;
+    }
+
+    .timeline-step.active .step-label { opacity: 1; }
+
+    .step-content h3 {
+      font-size: 19px;
+      margin-bottom: 8px;
+      color: var(--black);
+    }
+
+    .step-content p {
+      font-size: 15px;
+      color: var(--slate);
+      line-height: 1.65;
+    }
+
+    /* ─── CLOSING CTA ────────────────────────────────── */
+    #cta {
+      background: var(--black);
+      padding: 120px 0;
+    }
+
+    .cta-inner {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cta-inner h2 {
+      font-size: clamp(36px, 4vw, 52px);
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .cta-inner p {
+      font-size: 18px;
+      color: var(--muted-white);
+      margin: 0 auto 40px;
+    }
+
+    .cta-sub {
+      margin-top: 24px;
+      font-size: 13px;
+      color: rgba(200,213,206,0.5);
+      max-width: 100%;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 40px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo svg { height: 28px; width: auto; }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--muted-white);
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-legal {
+      font-size: 12px;
+      color: rgba(200,213,206,0.5);
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* ─── Responsive ─────────────────────────────────── */
+    @media (max-width: 900px) {
+      :root { --section-py: 72px; }
+
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-stats { grid-template-columns: repeat(3, 1fr); }
+      .hero-stat { padding: 24px; }
+      .stat-number { font-size: 36px; }
+
+      .problem-grid,
+      .service-grid { grid-template-columns: 1fr; gap: 48px; }
+
+      .pillars { grid-template-columns: 1fr; gap: 12px; }
+
+      .team-cards { grid-template-columns: 1fr; }
+
+      .pricing-tiers { grid-template-columns: 1fr; gap: 16px; }
+
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .container { padding: 0 20px; }
+      .hero-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ──────────────────────────────────────────── -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" aria-label="Signed Leasing">
+        <!-- Logo: mark in forest green, wordmark in signed black -->
+        <svg width="160" height="36" viewBox="0 0 260 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 38V46H25" stroke="#1F5C3A" stroke-width="4" stroke-linecap="square"/>
+          <path d="M37 18H45V26" stroke="#1F5C3A" stroke-width="4" stroke-linecap="square"/>
+          <path d="M72.816 43.384C71.3013 43.384 69.8933 43.1067 68.592 42.552C67.312 41.9973 66.2027 41.2293 65.264 40.248C64.3467 39.2453 63.6747 38.0827 63.248 36.76L66.864 35.192C67.44 36.5573 68.272 37.6347 69.36 38.424C70.448 39.192 71.6747 39.576 73.04 39.576C73.808 39.576 74.4693 39.4587 75.024 39.224C75.6 38.968 76.0373 38.6267 76.336 38.2C76.656 37.7733 76.816 37.2613 76.816 36.664C76.816 35.96 76.6027 35.384 76.176 34.936C75.7707 34.4667 75.152 34.104 74.32 33.848L69.744 32.376C67.888 31.8 66.4907 30.936 65.552 29.784C64.6133 28.632 64.144 27.2773 64.144 25.72C64.144 24.3547 64.4747 23.1493 65.136 22.104C65.8187 21.0587 66.7573 20.248 67.952 19.672C69.168 19.0747 70.5547 18.776 72.112 18.776C73.5413 18.776 74.8533 19.032 76.048 19.544C77.2427 20.0347 78.2667 20.728 79.12 21.624C79.9947 22.4987 80.6453 23.5333 81.072 24.728L77.488 26.328C77.0187 25.1333 76.3147 24.216 75.376 23.576C74.4373 22.9147 73.3493 22.584 72.112 22.584C71.3867 22.584 70.7467 22.712 70.192 22.968C69.6373 23.2027 69.2 23.544 68.88 23.992C68.5813 24.4187 68.432 24.9307 68.432 25.528C68.432 26.1893 68.6453 26.776 69.072 27.288C69.4987 27.7787 70.1493 28.1627 71.024 28.44L75.408 29.816C77.3067 30.4347 78.7253 31.288 79.664 32.376C80.624 33.464 81.104 34.808 81.104 36.408C81.104 37.7733 80.752 38.9787 80.048 40.024C79.344 41.0693 78.3733 41.8907 77.136 42.488C75.8987 43.0853 74.4587 43.384 72.816 43.384ZM84.6708 43V25.592H88.8628V43H84.6708ZM84.6708 23.64V19.16H88.8628V23.64H84.6708ZM101.181 50.04C99.8799 50.04 98.6746 49.8267 97.5653 49.4C96.4559 48.9733 95.4959 48.376 94.6853 47.608C93.8959 46.8613 93.3199 45.976 92.9573 44.952L96.8613 43.48C97.1173 44.2907 97.6186 44.9413 98.3653 45.432C99.1333 45.944 100.072 46.2 101.181 46.2C102.035 46.2 102.781 46.04 103.421 45.72C104.083 45.4 104.595 44.9307 104.957 44.312C105.32 43.7147 105.501 42.9893 105.501 42.136V38.168L106.301 39.128C105.704 40.1733 104.904 40.9627 103.901 41.496C102.899 42.0293 101.757 42.296 100.477 42.296C98.8559 42.296 97.4053 41.9227 96.1253 41.176C94.8453 40.4293 93.8426 39.4053 93.1173 38.104C92.3919 36.8027 92.0293 35.3413 92.0293 33.72C92.0293 32.0773 92.3919 30.616 93.1173 29.336C93.8426 28.056 94.8346 27.0533 96.0933 26.328C97.3519 25.5813 98.7813 25.208 100.381 25.208C101.683 25.208 102.824 25.4853 103.805 26.04C104.808 26.5733 105.64 27.352 106.301 28.376L105.725 29.432V25.592H109.693V42.136C109.693 43.6507 109.32 45.0053 108.573 46.2C107.848 47.3947 106.845 48.3333 105.565 49.016C104.307 49.6987 102.845 50.04 101.181 50.04ZM100.989 38.424C101.885 38.424 102.664 38.232 103.325 37.848C104.008 37.4427 104.541 36.888 104.925 36.184C105.309 35.48 105.501 34.6693 105.501 33.752C105.501 32.856 105.299 32.056 104.893 31.352C104.509 30.6267 103.976 30.0613 103.293 29.656C102.632 29.2507 101.864 29.048 100.989 29.048C100.115 29.048 99.3253 29.2507 98.6213 29.656C97.9173 30.0613 97.3626 30.6267 96.9573 31.352C96.5733 32.056 96.3813 32.856 96.3813 33.752C96.3813 34.648 96.5733 35.448 96.9573 36.152C97.3626 36.856 97.9066 37.4107 98.5893 37.816C99.2933 38.2213 100.093 38.424 100.989 38.424ZM113.608 43V25.592H117.544V29.016L117.224 28.408C117.63 27.3627 118.291 26.5733 119.208 26.04C120.147 25.4853 121.235 25.208 122.472 25.208C123.752 25.208 124.883 25.4853 125.864 26.04C126.867 26.5947 127.646 27.3733 128.2 28.376C128.755 29.3573 129.032 30.4987 129.032 31.8V43H124.84V32.792C124.84 32.024 124.691 31.3627 124.392 30.808C124.094 30.2533 123.678 29.8267 123.144 29.528C122.632 29.208 122.024 29.048 121.32 29.048C120.638 29.048 120.03 29.208 119.496 29.528C118.963 29.8267 118.547 30.2533 118.248 30.808C117.95 31.3627 117.8 32.024 117.8 32.792V43H113.608ZM140.833 43.384C139.041 43.384 137.473 42.9787 136.129 42.168C134.785 41.3573 133.74 40.2587 132.993 38.872C132.246 37.4853 131.873 35.9493 131.873 34.264C131.873 32.5147 132.246 30.968 132.993 29.624C133.761 28.2587 134.796 27.1813 136.097 26.392C137.42 25.6027 138.892 25.208 140.513 25.208C141.878 25.208 143.073 25.432 144.097 25.88C145.142 26.328 146.028 26.9467 146.753 27.736C147.478 28.5253 148.033 29.432 148.417 30.456C148.801 31.4587 148.993 32.5467 148.993 33.72C148.993 34.0187 148.972 34.328 148.929 34.648C148.908 34.968 148.854 35.2453 148.769 35.48H135.329V32.28H146.401L144.417 33.784C144.609 32.8027 144.556 31.928 144.257 31.16C143.98 30.392 143.51 29.784 142.849 29.336C142.209 28.888 141.43 28.664 140.513 28.664C139.638 28.664 138.86 28.888 138.177 29.336C137.494 29.7627 136.972 30.4027 136.609 31.256C136.268 32.088 136.14 33.1013 136.225 34.296C136.14 35.3627 136.278 36.312 136.641 37.144C137.025 37.9547 137.58 38.584 138.305 39.032C139.052 39.48 139.905 39.704 140.865 39.704C141.825 39.704 142.636 39.5013 143.297 39.096C143.98 38.6907 144.513 38.1467 144.897 37.464L148.289 39.128C147.948 39.96 147.414 40.696 146.689 41.336C145.964 41.976 145.1 42.4773 144.097 42.84C143.116 43.2027 142.028 43.384 140.833 43.384ZM160.267 43.384C158.581 43.384 157.077 42.9893 155.755 42.2C154.432 41.3893 153.387 40.2907 152.619 38.904C151.851 37.5173 151.467 35.9813 151.467 34.296C151.467 32.5893 151.851 31.0533 152.619 29.688C153.387 28.3227 154.432 27.2347 155.755 26.424C157.099 25.6133 158.592 25.208 160.235 25.208C161.557 25.208 162.731 25.4747 163.755 26.008C164.8 26.52 165.621 27.2453 166.219 28.184L165.579 29.048V18.776H169.771V43H165.803V39.64L166.251 40.472C165.653 41.4107 164.821 42.136 163.755 42.648C162.688 43.1387 161.525 43.384 160.267 43.384ZM160.715 39.544C161.675 39.544 162.517 39.32 163.243 38.872C163.968 38.424 164.533 37.8053 164.939 37.016C165.365 36.2267 165.579 35.32 165.579 34.296C165.579 33.2933 165.365 32.3973 164.939 31.608C164.533 30.7973 163.968 30.168 163.243 29.72C162.517 29.272 161.675 29.048 160.715 29.048C159.776 29.048 158.933 29.2827 158.187 29.752C157.44 30.2 156.853 30.8187 156.427 31.608C156.021 32.376 155.819 33.272 155.819 34.296C155.819 35.32 156.021 36.2267 156.427 37.016C156.853 37.8053 157.44 38.424 158.187 38.872C158.933 39.32 159.776 39.544 160.715 39.544Z" fill="#0D0D0D"/>
+        </svg>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#service">What we do</a></li>
+        <li><a href="#how">Why it works</a></li>
+        <li><a href="#team">How it works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#onboarding">Get started</a></li>
+      </ul>
+      <a href="#cta" class="btn btn-primary nav-cta">Book a call</a>
+    </div>
+  </nav>
+
+  <!-- ─── HERO — light background ──────────────────────── -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-left">
+          <h1 class="hero-headline">More leases signed.<br>Less to manage.</h1>
+          <p class="hero-sub">We respond to every prospect in under 15 minutes, qualify them, schedule tours, and get them signed -- so your team can focus on the onsite work they do best.</p>
+          <div class="hero-actions">
+            <a href="#cta" class="btn btn-primary">Book a call</a>
+            <a href="#service" class="btn btn-outline-dark">See how it works</a>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="stat-number"><span>15</span> min</div>
+              <p class="stat-label">First response to every lead -- vs. the 47-hour industry average</p>
+            </div>
+            <div class="hero-stat">
+              <div class="stat-number"><span>7</span> days</div>
+              <p class="stat-label">Coverage every day of the week, 10am to 7pm EST</p>
+            </div>
+            <div class="hero-stat">
+              <div class="stat-number"><span>7</span> days</div>
+              <p class="stat-label">From kickoff to your leasing pipeline fully operational</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PROBLEM ───────────────────────────────────────── -->
+  <section id="problem">
+    <div class="container">
+      <div class="problem-grid">
+        <div class="problem-text">
+          <span class="section-label">The problem</span>
+          <h2>Most properties are losing leases before they know it.</h2>
+          <p>The problem is not effort. Onsite teams are stretched across tours, maintenance, renewals, and resident issues. Running a disciplined lead operation on top of all that is nearly impossible without dedicated infrastructure.</p>
+          <p>Leads fall in. Prospects go with whoever responds first. The property never sees what it missed.</p>
+        </div>
+        <div class="stat-cards">
+          <div class="stat-card">
+            <div class="stat-card-number">47 hrs</div>
+            <p class="stat-card-text">Average response time to a web lead across the multifamily industry</p>
+            <p class="stat-footnote"><a href="https://www.insidesales.com/response-time-matters/" target="_blank" rel="noopener">InsideSales Lead Response Study</a></p>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-number">61%</div>
+            <p class="stat-card-text">Of leasing calls actually get answered during business hours</p>
+            <p class="stat-footnote"><a href="https://www.rentvision.com/blog/good-leads-for-your-apartments" target="_blank" rel="noopener">RentVision, 500+ communities (2023)</a></p>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-number">7x</div>
+            <p class="stat-card-text">More likely to qualify a lead contacted within the first hour vs. later</p>
+            <p class="stat-footnote"><a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener">Harvard Business Review, 1.25M leads</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICE ───────────────────────────────────────── -->
+  <section id="service">
+    <div class="container">
+      <div class="service-header">
+        <span class="section-label">What we do</span>
+        <h2>We run your leasing pipeline — from first contact to signed lease.</h2>
+        <p>Our agents are trained on your property, integrated into your PMS, and working seven days a week. Every lead gets a response within 15 minutes. Every prospect gets followed up with until they sign, go dark, or lease somewhere else.</p>
+      </div>
+      <div class="service-grid">
+        <ul class="workflow-list">
+          <li><span class="workflow-dot"></span>Lead intake and first response</li>
+          <li><span class="workflow-dot"></span>Prospect qualification</li>
+          <li><span class="workflow-dot"></span>Tour scheduling</li>
+          <li><span class="workflow-dot"></span>Follow-up sequences</li>
+          <li><span class="workflow-dot"></span>Application support and pipeline management</li>
+          <li><span class="workflow-dot"></span>Lease execution follow-through</li>
+          <li><span class="workflow-dot"></span>Weekly reporting on every lead</li>
+        </ul>
+        <div class="service-aside">
+          <p>You get weekly reporting on every lead -- where it came from, what happened, and what is still in the pipeline. No black box.</p>
+          <div class="not-box">
+            <h3>What we are not</h3>
+            <ul>
+              <li>Not a full-service property management company</li>
+              <li>Not software your team has to learn and run</li>
+              <li>Not a staffing agency that places and walks away</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── HOW IT WORKS ──────────────────────────────────── -->
+  <section id="how">
+    <div class="container">
+      <div class="how-header">
+        <span class="section-label">Why it works</span>
+        <h2>Fast response. Consistent follow-up. Full visibility.</h2>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <p class="pillar-number">01</p>
+          <h3>Speed that converts</h3>
+          <p>First response within 15 minutes, every lead, every day. The industry average is 47 hours. Your prospects hear from us before they have had time to move on.</p>
+        </div>
+        <div class="pillar">
+          <p class="pillar-number">02</p>
+          <h3>Consistency that does not quit</h3>
+          <p>Trained agents who know your property run proven follow-up sequences on every lead. No off days. No gaps after a turnover event. No leads that slip because someone was busy.</p>
+        </div>
+        <div class="pillar">
+          <p class="pillar-number">03</p>
+          <h3>A team you never manage</h3>
+          <p>A US-based operations manager runs QA, client reporting, and agent oversight. When something needs fixing, we fix it. You see results every week, not the problems underneath.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TEAM ───────────────────────────────────────────── -->
+  <section id="team">
+    <div class="container">
+      <div class="team-header">
+        <span class="section-label">How it works</span>
+        <h2>Real people. Trained on your property. Managed for you.</h2>
+        <p>Every client gets a dedicated team of trained leasing agents and a US-based operations manager who owns the relationship. Agents go through a two-week paid training period before they touch a single lead.</p>
+      </div>
+      <div class="team-cards">
+        <div class="team-card">
+          <div class="team-card-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+          </div>
+          <h3>Leasing Agents</h3>
+          <p>Trained on your property, your PMS, your pricing, and your qualification criteria. On coverage 10am to 7pm EST, seven days a week.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-card-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3>US-Based Operations Manager</h3>
+          <p>Monitors call quality, reviews follow-up sequences, and joins your weekly reporting call. One point of contact for everything.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-card-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+          </div>
+          <h3>AI-Assisted Workflows</h3>
+          <p>Faster first response, consistent follow-up sequencing, and full conversation logging so nothing gets missed and nothing is disputed.</p>
+        </div>
+      </div>
+      <div class="team-callout">
+        <p>When your leasing agent quits, it is our problem -- not yours. We backfill, retrain, and maintain continuity without interrupting your pipeline.</p>
+        <a href="#cta" class="btn btn-outline">Book a call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PRICING ───────────────────────────────────────── -->
+  <section id="pricing">
+    <div class="container">
+      <div class="pricing-header">
+        <span class="section-label">Pricing</span>
+        <h2>Transparent pricing. No surprises.</h2>
+        <p>A monthly retainer per unit plus a success fee when leases get signed. You pay for capacity and results, not headcount.</p>
+      </div>
+
+      <div class="pricing-calculator">
+        <div class="slider-row">
+          <p class="slider-label">How many units do you manage?</p>
+          <p class="slider-value"><span id="unitDisplay">250</span> <span>units</span></p>
+        </div>
+        <input type="range" id="unitSlider" min="50" max="2500" value="250" step="10">
+        <div class="slider-ticks">
+          <span>50</span>
+          <span>500</span>
+          <span>1,000</span>
+          <span>1,500</span>
+          <span>2,000</span>
+          <span>2,500</span>
+        </div>
+
+        <div class="pricing-output">
+          <div class="pricing-output-cell highlight">
+            <p class="output-label">Monthly retainer</p>
+            <p class="output-number"><span>$</span><span id="monthlyTotal">2,000</span></p>
+            <p class="output-sub" id="ratePerUnit">$8 per unit / month</p>
+          </div>
+          <div class="pricing-output-cell">
+            <p class="output-label">Per signed lease</p>
+            <p class="output-number"><span>$</span><span id="perLease">250</span></p>
+            <p class="output-sub">success fee per executed lease</p>
+          </div>
+        </div>
+
+        <p class="pricing-includes">All plans include onboarding, PMS integration, agent training, weekly reporting, and a dedicated US-based operations manager.</p>
+        <div class="pricing-pilot">
+          <p>Have a portfolio across multiple properties? <a href="#cta">Book a call and we will walk through it.</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ONBOARDING TIMELINE ───────────────────────────── -->
+  <section id="onboarding">
+    <div class="container">
+      <div class="onboarding-header">
+        <span class="section-label">How to get started</span>
+        <h2>Live in 7 days.</h2>
+        <p>We move fast. Here is what onboarding looks like from kickoff to a fully operational leasing pipeline.</p>
+      </div>
+      <div class="timeline" id="timeline">
+        <div class="timeline-track">
+          <div class="timeline-fill" id="timelineFill"></div>
+        </div>
+        <div class="timeline-step" data-step="0">
+          <div class="step-dot"></div>
+          <div class="step-content">
+            <p class="step-label">Day 1</p>
+            <h3>Discovery and setup</h3>
+            <p>PMS access, lead routing configured, team introduced. We learn your properties, your current pipeline, and how leads come in today.</p>
+          </div>
+        </div>
+        <div class="timeline-step" data-step="1">
+          <div class="step-dot"></div>
+          <div class="step-content">
+            <p class="step-label">Days 2–3</p>
+            <h3>Knowledge base and agent training</h3>
+            <p>Your agents learn your property before they touch a lead. Knowledge base built, CRM configured, qualification criteria locked in.</p>
+          </div>
+        </div>
+        <div class="timeline-step" data-step="2">
+          <div class="step-dot"></div>
+          <div class="step-content">
+            <p class="step-label">Days 4–5</p>
+            <h3>Soft launch with full QA</h3>
+            <p>Every conversation reviewed before it goes out. We catch any gaps in training or routing before they reach your prospects.</p>
+          </div>
+        </div>
+        <div class="timeline-step" data-step="3">
+          <div class="step-dot"></div>
+          <div class="step-content">
+            <p class="step-label">Day 6</p>
+            <h3>Full operations</h3>
+            <p>All workflows live. Baseline metrics established. You start seeing the pipeline in weekly reports.</p>
+          </div>
+        </div>
+        <div class="timeline-step" data-step="4">
+          <div class="step-dot"></div>
+          <div class="step-content">
+            <p class="step-label">Day 7</p>
+            <h3>Onboarding close call</h3>
+            <p>We review what we have learned, confirm the setup is dialed in, and transition to your live retainer. From here, we run it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CLOSING CTA ───────────────────────────────────── -->
+  <section id="cta">
+    <div class="container">
+      <div class="cta-inner">
+        <h2>Ready to stop losing leads?</h2>
+        <p>Book a call. We will walk through your current leasing setup, find where leads are going cold, and show you exactly how we would run your pipeline.</p>
+        <a href="#cta" class="btn btn-primary" style="font-size:16px; padding:16px 36px;">Book a call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a href="#hero" class="footer-logo" aria-label="Signed Leasing">
+          <svg width="120" height="28" viewBox="0 0 260 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 38V46H25" stroke="#1F5C3A" stroke-width="4" stroke-linecap="square"/>
+            <path d="M37 18H45V26" stroke="#1F5C3A" stroke-width="4" stroke-linecap="square"/>
+            <path d="M72.816 43.384C71.3013 43.384 69.8933 43.1067 68.592 42.552C67.312 41.9973 66.2027 41.2293 65.264 40.248C64.3467 39.2453 63.6747 38.0827 63.248 36.76L66.864 35.192C67.44 36.5573 68.272 37.6347 69.36 38.424C70.448 39.192 71.6747 39.576 73.04 39.576C73.808 39.576 74.4693 39.4587 75.024 39.224C75.6 38.968 76.0373 38.6267 76.336 38.2C76.656 37.7733 76.816 37.2613 76.816 36.664C76.816 35.96 76.6027 35.384 76.176 34.936C75.7707 34.4667 75.152 34.104 74.32 33.848L69.744 32.376C67.888 31.8 66.4907 30.936 65.552 29.784C64.6133 28.632 64.144 27.2773 64.144 25.72C64.144 24.3547 64.4747 23.1493 65.136 22.104C65.8187 21.0587 66.7573 20.248 67.952 19.672C69.168 19.0747 70.5547 18.776 72.112 18.776C73.5413 18.776 74.8533 19.032 76.048 19.544C77.2427 20.0347 78.2667 20.728 79.12 21.624C79.9947 22.4987 80.6453 23.5333 81.072 24.728L77.488 26.328C77.0187 25.1333 76.3147 24.216 75.376 23.576C74.4373 22.9147 73.3493 22.584 72.112 22.584C71.3867 22.584 70.7467 22.712 70.192 22.968C69.6373 23.2027 69.2 23.544 68.88 23.992C68.5813 24.4187 68.432 24.9307 68.432 25.528C68.432 26.1893 68.6453 26.776 69.072 27.288C69.4987 27.7787 70.1493 28.1627 71.024 28.44L75.408 29.816C77.3067 30.4347 78.7253 31.288 79.664 32.376C80.624 33.464 81.104 34.808 81.104 36.408C81.104 37.7733 80.752 38.9787 80.048 40.024C79.344 41.0693 78.3733 41.8907 77.136 42.488C75.8987 43.0853 74.4587 43.384 72.816 43.384ZM84.6708 43V25.592H88.8628V43H84.6708ZM84.6708 23.64V19.16H88.8628V23.64H84.6708ZM101.181 50.04C99.8799 50.04 98.6746 49.8267 97.5653 49.4C96.4559 48.9733 95.4959 48.376 94.6853 47.608C93.8959 46.8613 93.3199 45.976 92.9573 44.952L96.8613 43.48C97.1173 44.2907 97.6186 44.9413 98.3653 45.432C99.1333 45.944 100.072 46.2 101.181 46.2C102.035 46.2 102.781 46.04 103.421 45.72C104.083 45.4 104.595 44.9307 104.957 44.312C105.32 43.7147 105.501 42.9893 105.501 42.136V38.168L106.301 39.128C105.704 40.1733 104.904 40.9627 103.901 41.496C102.899 42.0293 101.757 42.296 100.477 42.296C98.8559 42.296 97.4053 41.9227 96.1253 41.176C94.8453 40.4293 93.8426 39.4053 93.1173 38.104C92.3919 36.8027 92.0293 35.3413 92.0293 33.72C92.0293 32.0773 92.3919 30.616 93.1173 29.336C93.8426 28.056 94.8346 27.0533 96.0933 26.328C97.3519 25.5813 98.7813 25.208 100.381 25.208C101.683 25.208 102.824 25.4853 103.805 26.04C104.808 26.5733 105.64 27.352 106.301 28.376L105.725 29.432V25.592H109.693V42.136C109.693 43.6507 109.32 45.0053 108.573 46.2C107.848 47.3947 106.845 48.3333 105.565 49.016C104.307 49.6987 102.845 50.04 101.181 50.04ZM100.989 38.424C101.885 38.424 102.664 38.232 103.325 37.848C104.008 37.4427 104.541 36.888 104.925 36.184C105.309 35.48 105.501 34.6693 105.501 33.752C105.501 32.856 105.299 32.056 104.893 31.352C104.509 30.6267 103.976 30.0613 103.293 29.656C102.632 29.2507 101.864 29.048 100.989 29.048C100.115 29.048 99.3253 29.2507 98.6213 29.656C97.9173 30.0613 97.3626 30.6267 96.9573 31.352C96.5733 32.056 96.3813 32.856 96.3813 33.752C96.3813 34.648 96.5733 35.448 96.9573 36.152C97.3626 36.856 97.9066 37.4107 98.5893 37.816C99.2933 38.2213 100.093 38.424 100.989 38.424ZM113.608 43V25.592H117.544V29.016L117.224 28.408C117.63 27.3627 118.291 26.5733 119.208 26.04C120.147 25.4853 121.235 25.208 122.472 25.208C123.752 25.208 124.883 25.4853 125.864 26.04C126.867 26.5947 127.646 27.3733 128.2 28.376C128.755 29.3573 129.032 30.4987 129.032 31.8V43H124.84V32.792C124.84 32.024 124.691 31.3627 124.392 30.808C124.094 30.2533 123.678 29.8267 123.144 29.528C122.632 29.208 122.024 29.048 121.32 29.048C120.638 29.048 120.03 29.208 119.496 29.528C118.963 29.8267 118.547 30.2533 118.248 30.808C117.95 31.3627 117.8 32.024 117.8 32.792V43H113.608ZM140.833 43.384C139.041 43.384 137.473 42.9787 136.129 42.168C134.785 41.3573 133.74 40.2587 132.993 38.872C132.246 37.4853 131.873 35.9493 131.873 34.264C131.873 32.5147 132.246 30.968 132.993 29.624C133.761 28.2587 134.796 27.1813 136.097 26.392C137.42 25.6027 138.892 25.208 140.513 25.208C141.878 25.208 143.073 25.432 144.097 25.88C145.142 26.328 146.028 26.9467 146.753 27.736C147.478 28.5253 148.033 29.432 148.417 30.456C148.801 31.4587 148.993 32.5467 148.993 33.72C148.993 34.0187 148.972 34.328 148.929 34.648C148.908 34.968 148.854 35.2453 148.769 35.48H135.329V32.28H146.401L144.417 33.784C144.609 32.8027 144.556 31.928 144.257 31.16C143.98 30.392 143.51 29.784 142.849 29.336C142.209 28.888 141.43 28.664 140.513 28.664C139.638 28.664 138.86 28.888 138.177 29.336C137.494 29.7627 136.972 30.4027 136.609 31.256C136.268 32.088 136.14 33.1013 136.225 34.296C136.14 35.3627 136.278 36.312 136.641 37.144C137.025 37.9547 137.58 38.584 138.305 39.032C139.052 39.48 139.905 39.704 140.865 39.704C141.825 39.704 142.636 39.5013 143.297 39.096C143.98 38.6907 144.513 38.1467 144.897 37.464L148.289 39.128C147.948 39.96 147.414 40.696 146.689 41.336C145.964 41.976 145.1 42.4773 144.097 42.84C143.116 43.2027 142.028 43.384 140.833 43.384ZM160.267 43.384C158.581 43.384 157.077 42.9893 155.755 42.2C154.432 41.3893 153.387 40.2907 152.619 38.904C151.851 37.5173 151.467 35.9813 151.467 34.296C151.467 32.5893 151.851 31.0533 152.619 29.688C153.387 28.3227 154.432 27.2347 155.755 26.424C157.099 25.6133 158.592 25.208 160.235 25.208C161.557 25.208 162.731 25.4747 163.755 26.008C164.8 26.52 165.621 27.2453 166.219 28.184L165.579 29.048V18.776H169.771V43H165.803V39.64L166.251 40.472C165.653 41.4107 164.821 42.136 163.755 42.648C162.688 43.1387 161.525 43.384 160.267 43.384ZM160.715 39.544C161.675 39.544 162.517 39.32 163.243 38.872C163.968 38.424 164.533 37.8053 164.939 37.016C165.365 36.2267 165.579 35.32 165.579 34.296C165.579 33.2933 165.365 32.3973 164.939 31.608C164.533 30.7973 163.968 30.168 163.243 29.72C162.517 29.272 161.675 29.048 160.715 29.048C159.776 29.048 158.933 29.2827 158.187 29.752C157.44 30.2 156.853 30.8187 156.427 31.608C156.021 32.376 155.819 33.272 155.819 34.296C155.819 35.32 156.021 36.2267 156.427 37.016C156.853 37.8053 157.44 38.424 158.187 38.872C158.933 39.32 159.776 39.544 160.715 39.544Z" fill="rgba(255,255,255,0.4)"/>
+          </svg>
+        </a>
+        <ul class="footer-links">
+          <li><a href="#service">How it works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#cta">Book a call</a></li>
+        </ul>
+        <p class="footer-legal">Fair Housing compliant. All agents trained on federal and state Fair Housing requirements. &nbsp;&nbsp; &copy; 2026 Signed Leasing. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── PRICING SLIDER JS ───────────────────────────────── -->
+  <script>
+    (function () {
+      const slider      = document.getElementById('unitSlider');
+      const unitDisplay  = document.getElementById('unitDisplay');
+      const monthlyTotal = document.getElementById('monthlyTotal');
+      const ratePerUnit  = document.getElementById('ratePerUnit');
+      const perLease     = document.getElementById('perLease');
+
+      function getTier(units) {
+        if (units <   200) return { rate: 10, lease: 300 };
+        if (units <   500) return { rate:  8, lease: 250 };
+        if (units <  1000) return { rate:  6, lease: 200 };
+        if (units <  2000) return { rate:  5, lease: 200 };
+        return                    { rate:  4, lease: 200 };
+      }
+
+      function fmt(n) {
+        return n.toLocaleString('en-US');
+      }
+
+      function update() {
+        const units = parseInt(slider.value);
+        const tier  = getTier(units);
+        const total = units * tier.rate;
+
+        const pct = ((units - 50) / (2500 - 50)) * 100;
+        slider.style.background =
+          `linear-gradient(to right, var(--forest) ${pct}%, var(--border) ${pct}%)`;
+
+        unitDisplay.textContent  = fmt(units);
+        monthlyTotal.textContent = fmt(total);
+        ratePerUnit.textContent  = `$${tier.rate} per unit / month`;
+        perLease.textContent     = fmt(tier.lease);
+      }
+
+      slider.addEventListener('input', update);
+      update();
+    })();
+  </script>
+
+  <!-- ─── TIMELINE JS ────────────────────────────────────── -->
+  <script>
+    (function () {
+      const timeline = document.getElementById('timeline');
+      const fill = document.getElementById('timelineFill');
+      const steps = Array.from(document.querySelectorAll('.timeline-step'));
+
+      if (!timeline || !fill || !steps.length) return;
+
+      function getStepPositions() {
+        const trackEl = timeline.querySelector('.timeline-track');
+        const trackTop = trackEl.getBoundingClientRect().top + window.scrollY;
+        const trackHeight = trackEl.offsetHeight;
+
+        return steps.map(step => {
+          const dot = step.querySelector('.step-dot');
+          const dotCenter = dot.getBoundingClientRect().top + window.scrollY + dot.offsetHeight / 2;
+          return (dotCenter - trackTop) / trackHeight;
+        });
+      }
+
+      function onScroll() {
+        const trackEl = timeline.querySelector('.timeline-track');
+        const trackRect = trackEl.getBoundingClientRect();
+        const trackTop = trackRect.top + window.scrollY;
+        const trackHeight = trackEl.offsetHeight;
+
+        const windowMid = window.scrollY + window.innerHeight * 0.65;
+        const progress = Math.min(1, Math.max(0, (windowMid - trackTop) / trackHeight));
+
+        fill.style.height = (progress * 100) + '%';
+
+        const positions = getStepPositions();
+        steps.forEach((step, i) => {
+          if (progress >= positions[i] - 0.02) {
+            step.classList.add('active');
+          } else {
+            step.classList.remove('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>
