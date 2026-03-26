@@ -323,7 +323,7 @@
     }
 
     /* ─── WHAT WE DO ─────────────────────────────────── */
-    #service {
+    #what-we-do {
       background: var(--birch);
     }
 
@@ -432,12 +432,12 @@
     }
 
     /* ─── HOW IT WORKS (3 pillars) ───────────────────── */
-    #how {
+    #why-it-works {
       background: var(--black);
       color: var(--white);
     }
 
-    #how .section-label { color: var(--muted-white); }
+    #why-it-works .section-label { color: var(--muted-white); }
 
     .how-header {
       max-width: 600px;
@@ -491,7 +491,7 @@
     }
 
     /* ─── TEAM ───────────────────────────────────────── */
-    #team {
+    #how-it-works {
       background: var(--birch);
     }
 
@@ -748,7 +748,7 @@
     }
 
     /* ─── ONBOARDING / TIMELINE ──────────────────────── */
-    #onboarding {
+    #get-started {
       background: var(--birch);
       overflow: hidden;
     }
@@ -862,7 +862,7 @@
     }
 
     /* ─── CLOSING CTA ────────────────────────────────── */
-    #cta {
+    #book-a-call {
       background: var(--black);
       padding: 120px 0;
     }
@@ -934,6 +934,8 @@
     @media (max-width: 900px) {
       :root { --section-py: 72px; }
 
+      #hero { padding: 100px 0 80px; min-height: unset; }
+
       .hero-inner { grid-template-columns: 1fr; gap: 48px; }
       .hero-stats { grid-template-columns: repeat(3, 1fr); }
       .hero-stat { padding: 24px; }
@@ -953,7 +955,10 @@
 
     @media (max-width: 560px) {
       .container { padding: 0 20px; }
+      #hero { padding: 80px 0 60px; }
       .hero-stats { grid-template-columns: 1fr; }
+      .pricing-output { grid-template-columns: 1fr; }
+      .pricing-output-cell { padding: 24px; }
     }
   </style>
 </head>
@@ -971,13 +976,13 @@
         </svg>
       </a>
       <ul class="nav-links">
-        <li><a href="#service">What we do</a></li>
-        <li><a href="#how">Why it works</a></li>
-        <li><a href="#team">How it works</a></li>
+        <li><a href="#what-we-do">What we do</a></li>
+        <li><a href="#why-it-works">Why it works</a></li>
+        <li><a href="#how-it-works">How it works</a></li>
         <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#onboarding">Get started</a></li>
+        <li><a href="#get-started">Get started</a></li>
       </ul>
-      <a href="#cta" class="btn btn-primary nav-cta">Book a call</a>
+      <a href="#book-a-call" class="btn btn-primary nav-cta">Book a call</a>
     </div>
   </nav>
 
@@ -990,8 +995,8 @@
           <h1 class="hero-headline">More leases signed.<br>Less to manage.</h1>
           <p class="hero-sub">We respond to every prospect in under 15 minutes, qualify them, schedule tours, and get them signed -- so your team can focus on the onsite work they do best.</p>
           <div class="hero-actions">
-            <a href="#cta" class="btn btn-primary">Book a call</a>
-            <a href="#service" class="btn btn-outline-dark">See how it works</a>
+            <a href="#book-a-call" class="btn btn-primary">Book a call</a>
+            <a href="#what-we-do" class="btn btn-outline-dark">See how it works</a>
           </div>
         </div>
         <div class="hero-right">
@@ -1046,7 +1051,7 @@
   </section>
 
   <!-- ─── SERVICE ───────────────────────────────────────── -->
-  <section id="service">
+  <section id="what-we-do">
     <div class="container">
       <div class="service-header">
         <span class="section-label">What we do</span>
@@ -1079,7 +1084,7 @@
   </section>
 
   <!-- ─── HOW IT WORKS ──────────────────────────────────── -->
-  <section id="how">
+  <section id="why-it-works">
     <div class="container">
       <div class="how-header">
         <span class="section-label">Why it works</span>
@@ -1106,7 +1111,7 @@
   </section>
 
   <!-- ─── TEAM ───────────────────────────────────────────── -->
-  <section id="team">
+  <section id="how-it-works">
     <div class="container">
       <div class="team-header">
         <span class="section-label">How it works</span>
@@ -1138,7 +1143,7 @@
       </div>
       <div class="team-callout">
         <p>When your leasing agent quits, it is our problem -- not yours. We backfill, retrain, and maintain continuity without interrupting your pipeline.</p>
-        <a href="#cta" class="btn btn-outline">Book a call</a>
+        <a href="#book-a-call" class="btn btn-outline">Book a call</a>
       </div>
     </div>
   </section>
@@ -1182,14 +1187,14 @@
 
         <p class="pricing-includes">All plans include onboarding, PMS integration, agent training, weekly reporting, and a dedicated US-based operations manager.</p>
         <div class="pricing-pilot">
-          <p>Have a portfolio across multiple properties? <a href="#cta">Book a call and we will walk through it.</a></p>
+          <p>Have a portfolio across multiple properties? <a href="#book-a-call">Book a call and we will walk through it.</a></p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ─── ONBOARDING TIMELINE ───────────────────────────── -->
-  <section id="onboarding">
+  <section id="get-started">
     <div class="container">
       <div class="onboarding-header">
         <span class="section-label">How to get started</span>
@@ -1245,12 +1250,12 @@
   </section>
 
   <!-- ─── CLOSING CTA ───────────────────────────────────── -->
-  <section id="cta">
+  <section id="book-a-call">
     <div class="container">
       <div class="cta-inner">
         <h2>Ready to stop losing leads?</h2>
         <p>Book a call. We will walk through your current leasing setup, find where leads are going cold, and show you exactly how we would run your pipeline.</p>
-        <a href="#cta" class="btn btn-primary" style="font-size:16px; padding:16px 36px;">Book a call</a>
+        <a href="#book-a-call" class="btn btn-primary" style="font-size:16px; padding:16px 36px;">Book a call</a>
       </div>
     </div>
   </section>
@@ -1267,9 +1272,9 @@
           </svg>
         </a>
         <ul class="footer-links">
-          <li><a href="#service">How it works</a></li>
+          <li><a href="#what-we-do">How it works</a></li>
           <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#cta">Book a call</a></li>
+          <li><a href="#book-a-call">Book a call</a></li>
         </ul>
         <p class="footer-legal">Fair Housing compliant. All agents trained on federal and state Fair Housing requirements. &nbsp;&nbsp; &copy; 2026 Signed Leasing. All rights reserved.</p>
       </div>
