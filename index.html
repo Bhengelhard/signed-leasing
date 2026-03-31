@@ -1317,14 +1317,16 @@
             <p class="pricing-option-subtitle">Flat fee. Full service. Easy to budget.</p>
           </div>
           <div class="pricing-option-body">
-            <p class="output-label">Monthly total</p>
+            <p class="output-label">Per unit / month</p>
+            <p class="output-number"><span>$</span><span id="rateDisplay">8</span></p>
+            <p class="output-sub">flat monthly rate</p>
+            <p class="output-label" style="margin-top:24px;">Monthly total</p>
             <p class="output-number"><span>$</span><span id="monthlyTotal">2,000</span></p>
-            <p class="output-sub" id="ratePerUnit">$8 per unit / month</p>
           </div>
         </div>
 
         <!-- Option B: Per-Signed-Lease -->
-        <div class="pricing-option" id="optionB" role="radio" aria-checked="false" tabindex="0">
+        <div class="pricing-option is-unselected" id="optionB" role="radio" aria-checked="false" tabindex="0">
           <div class="pricing-option-header">
             <div class="pricing-option-check">
               <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1339,7 +1341,7 @@
             <p class="output-sub">per executed lease &mdash; no retainer</p>
             <p class="output-label" style="margin-top:24px;">Est. monthly spend</p>
             <p class="output-number"><span>$</span><span id="leaseEstimate">833</span></p>
-            <p class="output-estimate-note">Estimate based on 40% annual turnover across <span id="leaseUnitCount">250</span> units, spread monthly</p>
+            <p class="output-estimate-note">Estimate based on 40% annual turnover</p>
           </div>
         </div>
 
@@ -1448,9 +1450,8 @@
       const slider         = document.getElementById('unitSlider');
       const unitDisplay    = document.getElementById('unitDisplay');
       const monthlyTotal   = document.getElementById('monthlyTotal');
-      const ratePerUnit    = document.getElementById('ratePerUnit');
+      const rateDisplay    = document.getElementById('rateDisplay');
       const leaseEstimate  = document.getElementById('leaseEstimate');
-      const leaseUnitCount = document.getElementById('leaseUnitCount');
       const optionA        = document.getElementById('optionA');
       const optionB        = document.getElementById('optionB');
 
@@ -1479,9 +1480,8 @@
 
         unitDisplay.textContent    = fmt(units);
         monthlyTotal.textContent   = fmt(total);
-        ratePerUnit.textContent    = `$${tier.rate} per unit / month`;
+        rateDisplay.textContent    = tier.rate;
         leaseEstimate.textContent  = fmt(estimate);
-        leaseUnitCount.textContent = fmt(units);
       }
 
       function selectOption(selected, deselected) {
