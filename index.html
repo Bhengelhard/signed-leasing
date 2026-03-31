@@ -431,13 +431,10 @@
       background: var(--slate);
     }
 
-    /* ─── HOW IT WORKS (3 pillars) ───────────────────── */
+    /* ─── WHY IT WORKS (3 pillars) ───────────────────── */
     #why-it-works {
-      background: var(--black);
-      color: var(--white);
+      background: var(--birch);
     }
-
-    #why-it-works .section-label { color: var(--muted-white); }
 
     .how-header {
       max-width: 600px;
@@ -446,7 +443,7 @@
 
     .how-header h2 {
       font-size: clamp(32px, 3.5vw, 44px);
-      color: var(--white);
+      color: var(--black);
     }
 
     .pillars {
@@ -456,16 +453,16 @@
     }
 
     .pillar {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: var(--white);
+      border: 1px solid var(--birch-border);
       border-radius: 10px;
       padding: 48px 40px;
       transition: background 0.2s, border-color 0.2s;
     }
 
     .pillar:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: rgba(255,255,255,0.18);
+      background: var(--offwhite);
+      border-color: var(--slate);
     }
 
     .pillar-number {
@@ -473,26 +470,27 @@
       font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.08em;
-      color: var(--muted-white);
+      color: var(--forest);
       margin-bottom: 20px;
     }
 
     .pillar h3 {
       font-size: 22px;
-      color: var(--white);
+      color: var(--black);
       margin-bottom: 16px;
       letter-spacing: -0.02em;
     }
 
     .pillar p {
       font-size: 15px;
-      color: var(--muted-white);
+      color: var(--slate);
       line-height: 1.7;
     }
 
-    /* ─── TEAM ───────────────────────────────────────── */
+    /* ─── HOW IT WORKS (team) ────────────────────────── */
     #how-it-works {
-      background: var(--birch);
+      background: var(--black);
+      color: var(--white);
     }
 
     .team-header {
@@ -503,11 +501,12 @@
     .team-header h2 {
       font-size: clamp(32px, 3.5vw, 44px);
       margin-bottom: 20px;
+      color: var(--white);
     }
 
     .team-header p {
       font-size: 17px;
-      color: var(--slate);
+      color: var(--muted-white);
       line-height: 1.7;
     }
 
@@ -519,8 +518,8 @@
     }
 
     .team-card {
-      background: var(--white);
-      border: 1px solid var(--birch-border);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 10px;
       padding: 36px 32px;
     }
@@ -545,11 +544,12 @@
     .team-card h3 {
       font-size: 17px;
       margin-bottom: 10px;
+      color: var(--white);
     }
 
     .team-card p {
       font-size: 14px;
-      color: var(--slate);
+      color: var(--muted-white);
       line-height: 1.6;
     }
 
