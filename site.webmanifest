@@ -1,0 +1,13 @@
+{
+  "name": "Signed Leasing",
+  "short_name": "Signed",
+  "description": "Remote leasing managed service for multifamily properties.",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#1F5C3A",
+  "background_color": "#F3EEE6",
+  "display": "standalone",
+  "start_url": "/"
+}
