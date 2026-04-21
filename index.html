@@ -1321,10 +1321,10 @@
           </div>
           <div class="pricing-option-body">
             <p class="output-label">Per unit / month</p>
-            <p class="output-number"><span>$</span><span id="rateDisplay">8</span></p>
+            <p class="output-number"><span>$</span><span id="rateDisplay">10</span></p>
             <p class="output-sub">flat monthly rate</p>
             <p class="output-label" style="margin-top:24px;">Monthly total</p>
-            <p class="output-number"><span>$</span><span id="monthlyTotal">2,000</span></p>
+            <p class="output-number"><span>$</span><span id="monthlyTotal">2,500</span></p>
           </div>
         </div>
 
@@ -1340,11 +1340,11 @@
           </div>
           <div class="pricing-option-body">
             <p class="output-label">Per signed lease</p>
-            <p class="output-number"><span>$</span><span>250</span></p>
+            <p class="output-number"><span>$</span><span>500</span></p>
             <p class="output-sub">per executed lease &mdash; no retainer</p>
             <p class="output-label" style="margin-top:24px;">Est. monthly spend</p>
-            <p class="output-number"><span>$</span><span id="leaseEstimate">833</span></p>
-            <p class="output-estimate-note">Estimate based on 40% annual turnover</p>
+            <p class="output-number"><span>$</span><span id="leaseEstimate">3,125</span></p>
+            <p class="output-estimate-note">Estimate based on 30% annual turnover</p>
           </div>
         </div>
 
@@ -1459,11 +1459,7 @@
       const optionB        = document.getElementById('optionB');
 
       function getTier(units) {
-        if (units <   200) return { rate: 10 };
-        if (units <   500) return { rate:  8 };
-        if (units <  1000) return { rate:  6 };
-        if (units <  2000) return { rate:  5 };
-        return                    { rate:  4 };
+        return { rate: 10 };
       }
 
       function fmt(n) {
@@ -1474,8 +1470,8 @@
         const units = parseInt(slider.value);
         const tier  = getTier(units);
         const total = units * tier.rate;
-        // 40% annual turnover / 12 months * $250/lease
-        const estimate = Math.round((units * 0.40 / 12) * 250);
+        // 30% annual turnover / 12 months * $500/lease
+        const estimate = Math.round((units * 0.30 / 12) * 500);
 
         const pct = ((units - 50) / (2500 - 50)) * 100;
         slider.style.background =
